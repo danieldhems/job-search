@@ -9,15 +9,12 @@ export function sentenceCase(str: string): string {
 }
 
 export function Breadcrumbs({ pathSegments }: { pathSegments: string[] }) {
-  console.log("path segments", pathSegments)
-
-
-
+  // Generate path string based on current path segment.
+  // This allows each breadcrumb link to point to its respective route.
   const getPathByIndex = (segments: string[], index: number) => {
     let path = "/";
-    for (let i = 0; i <= index; i++) {
-      if (segments[i] === "") continue;
 
+    for (let i = 0; i <= index; i++) {
       path += segments[i];
       if (i < index) {
         path += "/";
@@ -27,12 +24,22 @@ export function Breadcrumbs({ pathSegments }: { pathSegments: string[] }) {
     return path;
   }
 
+  const isCurrentPath = (str: string, segments: string[]) => str === segments[segments.length - 1];
+
+  const trailingSlash = (pathSegments: string[], index: number) => index < pathSegments.length - 1 && " / "
+
   return (
-    <ul>
+    <ul className="flex">
       {pathSegments.map((segment: string, index: number) => (
-        <li key={`breadcrumb-${index}`}>
-          <Link href={getPathByIndex(pathSegments, index)}>{segment}</Link>
-          {index < pathSegments.length - 1 && index !== 0 && " / "}
+        <li key={`breadcrumb-${index}`} className="mr-1">
+          {isCurrentPath(segment, pathSegments) ? (
+            sentenceCase(segment)
+          ) : (
+            <Link href={getPathByIndex(pathSegments, index)}>
+              {sentenceCase(segment)}
+              {trailingSlash(pathSegments, index)}
+            </Link>
+          )}
         </li>
       ))}
     </ul>
@@ -41,7 +48,7 @@ export function Breadcrumbs({ pathSegments }: { pathSegments: string[] }) {
 
 export default function PageHeading() {
   const pathname = usePathname();
-  const segments = pathname.split("/");
+  const segments = pathname.split("/").filter((s: string) => s !== "");
   const routeName = pathname === "/"
     ? "Dashboard"
     : sentenceCase(segments[segments.length - 1]);
@@ -53,7 +60,7 @@ export default function PageHeading() {
           <h1 className="text-3xl font-bold tracking-tight text-white">{routeName}</h1>
         </div>
       </header>
-      <nav id="breadcrumn">
+      <nav id="breadcrumn" className="px-6 pt-6">
         <Breadcrumbs pathSegments={segments} />
       </nav>
     </>
