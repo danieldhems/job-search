@@ -2,8 +2,10 @@
   "name": "job-search",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
+    "api": "nodemon src/api/index.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,6 +16,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "method-override": "^3.0.0",
+    "mysql2": "^3.14.3",
     "next": "15.4.6",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
@@ -28,6 +31,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "nodemon": "^3.1.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

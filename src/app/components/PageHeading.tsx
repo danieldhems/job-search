@@ -60,7 +60,7 @@ export default function PageHeading() {
           <h1 className="text-3xl font-bold tracking-tight text-white">{routeName}</h1>
         </div>
       </header>
-      <nav id="breadcrumn" className="px-6 pt-6">
+      <nav id="breadcrumn" className="px-6 pt-3">
         <Breadcrumbs pathSegments={segments} />
       </nav>
     </>
