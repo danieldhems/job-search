@@ -1,17 +1,31 @@
+"use client";
+
 import { FormEvent } from "react";
 
 export default function AddCall() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-    const response = await fetch('/api/mysql/calls', {
+    const formData = new FormData(event.currentTarget);
+
+    const form = event.target as HTMLFormElement;
+    const data = {
+      phoneNumber: form.phone_number.value,
+      recruiterName: form.recruiter_name.value,
+      notes: form.notes.value,
+    };
+
+    console.log("form data", data)
+    const request = await fetch('/api/mysql/calls', {
       method: 'POST',
-      body: formData,
-    })
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     // Handle response if necessary
-    const data = await response.json();
+    const response = await request.json();
   }
 
   return (

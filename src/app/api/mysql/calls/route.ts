@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
-
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const connection = await mysql.createConnection({
     user: "jobsearch1",
     password: "Cat09021988",
@@ -26,7 +25,7 @@ export async function GET(request: NextRequest) {
   }
 };
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   const connection = await mysql.createConnection({
     user: "jobsearch1",
     password: "Cat09021988",
@@ -37,13 +36,12 @@ export async function POST(request: NextRequest) {
   let response;
 
   try {
-    console.log("POST api/calls request", request);
+    console.log("POST api/calls request");
 
-    const query = "INSERT INTO calls (phone_number, notes)";
-    const values = [];
+    const { phoneNumber, notes } = await request.json();
 
-    const [results] = await connection.execute(" calls");
-    console.log("calls query result", results);
+    const query = `INSERT INTO calls (phone_number, notes) VALUES ('${phoneNumber}', '${notes}');`;
+    const [results] = await connection.execute(query);
 
     response = results;
   } catch (error) {

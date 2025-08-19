@@ -1,14 +1,15 @@
-"use client";
+import CallList from "./CallList";
+import Header from "./Header";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-export default function Calls() {
-  const pathname = usePathname();
+export default async function Page() {
+  const data = await fetch("http://localhost:3000/api/mysql/calls");
+  const calls = await data.json();
 
   return (
     <>
-      <Link href={`${pathname}/add`}>Add a call</Link>
+      <Header />
+      <h2>Calls received</h2>
+      <CallList calls={calls} />
     </>
   )
 }
