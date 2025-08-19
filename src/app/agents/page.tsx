@@ -1,9 +1,14 @@
-import Link from "next/link";
+import AgentList from "./AgentList";
+import Header from "./Header";
 
-export default function Calls() {
+export default async function Calls() {
+  const data = await fetch("http://localhost:3000/api/mysql/agents");
+  const agents = await data.json();
+
   return (
     <>
-      <Link href="add">Add a call</Link>
+      <Header />
+      <AgentList agents={agents} />
     </>
   )
 }

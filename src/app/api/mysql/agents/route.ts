@@ -25,3 +25,42 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(response, { status: 200 })
   }
 };
+
+export async function POST(request: Request) {
+  const connection = await mysql.createConnection({
+    user: "jobsearch1",
+    password: "Cat09021988",
+    host: "localhost",
+    database: "job_search"
+  });
+
+  let response;
+
+  try {
+    console.log("POST api/agents request");
+
+    const {
+      firstName,
+      lastName,
+      mobileNumber,
+      phoneNumber,
+      company,
+      email,
+    } = await request.json();
+
+    const query = `INSERT INTO agents (first_name, last_name, mobile_number, phone_number, company, email) VALUES ('${firstName}', '${lastName}', '${mobileNumber}', '${phoneNumber}', '${company}', '${email}');`;
+    const [results] = await connection.execute(query);
+
+    response = results;
+  } catch (error) {
+    console.log("agents query error", error)
+    response = {
+      error,
+      returnedStatus: 200,
+    };
+  }
+
+  connection.end();
+
+  return NextResponse.json(response);
+};

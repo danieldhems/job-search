@@ -6,8 +6,6 @@ export default function AddCall() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget);
-
     const form = event.target as HTMLFormElement;
     const data = {
       phoneNumber: form.phone_number.value,
@@ -15,7 +13,6 @@ export default function AddCall() {
       notes: form.notes.value,
     };
 
-    console.log("form data", data)
     const request = await fetch('/api/mysql/calls', {
       method: 'POST',
       headers: {

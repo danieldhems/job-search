@@ -1,7 +1,7 @@
 import CallList from "./CallList";
 import Header from "./Header";
 
-export default async function Page() {
+export default async function CallsPage() {
   const data = await fetch("http://localhost:3000/api/mysql/calls");
   const calls = await data.json();
 
