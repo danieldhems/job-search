@@ -14,7 +14,16 @@ export async function GET(request: NextRequest) {
     const [results] = await connection.query("SELECT * FROM agents");
     console.log("agents query result", results);
 
-    return NextResponse.json(results);
+    const transformed = results.map((result) => ({
+      firstName: result.first_name,
+      lastName: result.last_name,
+      company: result.company,
+      email: result.email,
+      phoneNumber: result.phone_number,
+      mobileNumber: result.mobile_number,
+    }));
+
+    return NextResponse.json(transformed);
   } catch (error) {
     console.log("agents query error", error)
     const response = {
