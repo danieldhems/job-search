@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-export function sentenceCase(str: string): string {
-  const firstChar = str.charAt(0);
-  return firstChar.toUpperCase() + str.substring(1);
-}
+import { sentenceCase } from "../helpers";
 
 export function Breadcrumbs({ pathSegments }: { pathSegments: string[] }) {
   // Generate path string based on current path segment.

@@ -1,7 +1,6 @@
 "use client";
 
 export default function AgentList({ agents }) {
-  console.log("agents", agents)
   const agentList = agents.map((agent, index: number) => (
     <li key={`agent-${index}`} className="mb-3">
       <h3>{agent.firstName} {agent.lastName}</h3>

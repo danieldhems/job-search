@@ -9,6 +9,7 @@ const navigation = [
   { name: 'Dashboard', href: '/', current: true },
   { name: 'Calls', href: '/calls', current: false },
   { name: 'Agents', href: '/agents', current: false },
+  { name: 'Positions', href: '/positions', current: false },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },

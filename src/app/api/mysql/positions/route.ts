@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
-
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const connection = await mysql.createConnection({
     user: "jobsearch1",
     password: "Cat09021988",
@@ -11,12 +10,12 @@ export async function GET(request: NextRequest) {
   });
 
   try {
-    const [results] = await connection.query("SELECT * FROM agents");
-    console.log("agents query result", results);
+    const [results] = await connection.query("SELECT * FROM positions");
+    console.log("positions query result", results);
 
     return NextResponse.json(results);
   } catch (error) {
-    console.log("agents query error", error)
+    console.log("positions query error", error)
     const response = {
       error,
       returnedStatus: 200,
@@ -37,23 +36,16 @@ export async function POST(request: Request) {
   let response;
 
   try {
-    console.log("POST api/agents request");
+    console.log("POST api/positions request");
 
-    const {
-      firstName,
-      lastName,
-      mobileNumber,
-      phoneNumber,
-      company,
-      email,
-    } = await request.json();
+    const { jobTitle, jobDescription, salary, location, client, jobType, agentId } = await request.json();
 
-    const query = `INSERT INTO agents (first_name, last_name, mobile_number, phone_number, company, email) VALUES ('${firstName}', '${lastName}', '${mobileNumber}', '${phoneNumber}', '${company}', '${email}');`;
+    const query = `INSERT INTO positions (job_title, job_description, salary, client, location, job_type, agent_id) VALUES ('${jobTitle}', '${jobDescription}', '${salary}', '${location}', '${client}', '${jobType}', '${agentId}');`;
     const [results] = await connection.execute(query);
 
     response = results;
   } catch (error) {
-    console.log("agents query error", error)
+    console.log("positions query error", error)
     response = {
       error,
       returnedStatus: 200,

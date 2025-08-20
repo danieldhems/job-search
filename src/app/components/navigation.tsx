@@ -10,6 +10,9 @@ export default function Nav() {
         <li>
           <Link href="agents">Agents</Link>
         </li>
+        <li>
+          <Link href="positions">Positions</Link>
+        </li>
       </ul>
     </nav>
   )
