@@ -5,6 +5,7 @@ export default async function AddPositionPage() {
   const agentsData = await request.json();
 
   const agents = agentsData.map((result) => ({
+    id: result.id,
     firstName: result.first_name,
     lastName: result.last_name,
     company: result.company,

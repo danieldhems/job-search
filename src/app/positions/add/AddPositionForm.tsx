@@ -3,6 +3,7 @@
 import { FormEvent } from "react";
 
 export function AddPositionForm({ agents }) {
+  console.log("agents", agents)
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -12,11 +13,11 @@ export function AddPositionForm({ agents }) {
     const data = {
       jobTitle: form.job_title.value,
       jobDescription: form.job_description.value,
-      jobType: jobTypeOptions[form.job_type.selectedIndex].value,
+      jobType: parseInt(jobTypeOptions[form.job_type.selectedIndex].value),
       salary: form.salary.value,
       client: form.client.value,
       location: form.location.value,
-      agentId: agentOptions[form.agent_id.selectedIndex].value,
+      agentId: parseInt(agentOptions[form.agent_id.selectedIndex].value),
     };
 
     console.log("data", data)
