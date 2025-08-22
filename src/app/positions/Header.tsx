@@ -7,6 +7,8 @@ export default function PositionsHeader() {
   const pathname = usePathname();
 
   return (
-    <Link href={`${pathname}/add`}>Add a position</Link>
+    <div className="mb-3">
+      <Link href={`${pathname}/add`}>Add a position</Link>
+    </div>
   )
 }

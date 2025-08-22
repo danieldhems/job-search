@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const [results] = await connection.query("SELECT * FROM agents");
-    console.log("agents query result", results);
 
     return NextResponse.json(results);
   } catch (error) {

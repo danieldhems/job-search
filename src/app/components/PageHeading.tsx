@@ -25,20 +25,22 @@ export function Breadcrumbs({ pathSegments }: { pathSegments: string[] }) {
   const trailingSlash = (pathSegments: string[], index: number) => index < pathSegments.length - 1 && " / "
 
   return (
-    <ul className="flex">
-      {pathSegments.map((segment: string, index: number) => (
-        <li key={`breadcrumb-${index}`} className="mr-1">
-          {isCurrentPath(segment, pathSegments) ? (
-            sentenceCase(segment)
-          ) : (
-            <Link href={getPathByIndex(pathSegments, index)}>
-              {sentenceCase(segment)}
-              {trailingSlash(pathSegments, index)}
-            </Link>
-          )}
-        </li>
-      ))}
-    </ul>
+    <div className="mx-4 text-sm">
+      <ul className="flex">
+        {pathSegments.map((segment: string, index: number) => (
+          <li key={`breadcrumb-${index}`} className="mr-1">
+            {isCurrentPath(segment, pathSegments) ? (
+              sentenceCase(segment)
+            ) : (
+              <Link href={getPathByIndex(pathSegments, index)}>
+                {sentenceCase(segment)}
+                {trailingSlash(pathSegments, index)}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
