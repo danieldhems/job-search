@@ -1,29 +1,47 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 export function AddPositionForm({ agents }) {
+  const [jobSpecFilePath, setJobSpecFilePath] = useState<string>("");
+
+  async function onFileInputChange(event: FormEvent<HTMLInputElement>) {
+    const file = (event.target as HTMLInputElement).files;
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file[0]);
+
+      const request = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      // Handle response if necessary
+      const response = await request.json();
+      setJobSpecFilePath(response.filePath);
+    }
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement;
     const agentOptions = form.agent_id.options;
-    const jobTypeOptions = form.job_type.options;
+
     const data = {
       jobTitle: form.job_title.value,
       jobDescription: form.job_description.value,
-      jobType: parseInt(jobTypeOptions[form.job_type.selectedIndex].value),
+      jobType: parseInt(form.job_type.value),
       salary: form.salary.value,
       client: form.client.value,
       location: form.location.value,
       agentId: parseInt(agentOptions[form.agent_id.selectedIndex].value),
+      jobSpecFilePath,
     };
 
     const request = await fetch('/api/mysql/positions', {
       method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(data),
     });
 
@@ -39,11 +57,6 @@ export function AddPositionForm({ agents }) {
       </div>
       <div className="mb-3">
         <label>Job type</label>
-        <select name="job_type" className="block py-2">
-          <option value="">Select</option>
-          <option value="0">Permanent</option>
-          <option value="1">Contract</option>
-        </select>
         <div className="radio">
           <label>
             None
@@ -90,7 +103,7 @@ export function AddPositionForm({ agents }) {
       </div>
       <div className="mb-3">
         <label>Job spec</label>
-        <input type="file" name="job_spec_file" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        <input type="file" name="job_spec_file" onChange={onFileInputChange} className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
       </div>
       <div className="mb-3">
         <input type="submit"></input>

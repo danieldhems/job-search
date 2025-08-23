@@ -38,9 +38,42 @@ export async function POST(request: Request) {
   try {
     console.log("POST api/positions request");
 
-    const { jobTitle, jobDescription, salary, location, client, jobType, agentId } = await request.json();
+    const {
+      jobTitle,
+      jobDescription,
+      salary,
+      location,
+      client,
+      jobType,
+      agentId,
+      jobSpecFilePath,
+    } = await request.json();
 
-    const query = `INSERT INTO positions (job_title, job_description, salary, client, location, job_type, agent_id) VALUES ('${jobTitle}', '${jobDescription}', '${salary}', '${location}', '${client}', '${jobType}', '${agentId}');`;
+    const query = `
+      INSERT INTO positions
+      (
+        job_title, 
+        job_description,
+        salary,
+        client,
+        location,
+        job_type,
+        agent_id,
+        job_spec_file_path
+      )
+      VALUES
+      (
+        '${jobTitle}', 
+        '${jobDescription}', 
+        '${salary}', 
+        '${location}', 
+        '${client}', 
+        '${jobType}', 
+        '${agentId}',
+        '${jobSpecFilePath}'
+      );
+    `;
+
     const [results] = await connection.execute(query);
 
     response = results;
