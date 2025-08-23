@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/uploads");
+const PUBLIC_PATH = path.resolve(process.env.ROOT_PATH ?? "", "public/");
+const UPLOAD_DIR_NAME = "uploads/";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -12,20 +13,27 @@ export async function POST(req: Request) {
   if (file) {
     const buffer = await Buffer.from(await file.arrayBuffer());
 
-    if (!fs.existsSync(UPLOAD_DIR)) {
-      fs.mkdirSync(UPLOAD_DIR);
+    const uploadDestinationDir = path.resolve(PUBLIC_PATH + UPLOAD_DIR_NAME);
+
+    if (!fs.existsSync(uploadDestinationDir)) {
+      fs.mkdirSync(uploadDestinationDir);
     }
 
-    const filePath = path.resolve(UPLOAD_DIR, (body.file as File).name);
+    const fileName = (body.file as File).name;
+    const fileDestination = path.resolve(
+      uploadDestinationDir,
+      fileName
+    );
+
     // console.log("POST /api/upload -> saving file to path", filePath)
     fs.writeFileSync(
-      filePath,
+      fileDestination,
       buffer
     );
 
     return NextResponse.json({
       success: true,
-      filePath,
+      filePath: UPLOAD_DIR_NAME + fileName,
     });
   } else {
     return NextResponse.json({

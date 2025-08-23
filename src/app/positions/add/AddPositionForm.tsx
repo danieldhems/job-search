@@ -37,6 +37,7 @@ export function AddPositionForm({ agents }) {
       client: form.client.value,
       location: form.location.value,
       agentId: parseInt(agentOptions[form.agent_id.selectedIndex].value),
+      links: form.links.value,
       jobSpecFilePath,
     };
 
@@ -51,59 +52,61 @@ export function AddPositionForm({ agents }) {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="mb-3">
-        <label>Job title</label>
-        <input type="text" name="job_title" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Job type</label>
-        <div className="radio">
-          <label>
-            None
-            <input type="radio" name="job_type" value="" />
-          </label>
-          <label>
-            Permanent
-            <input type="radio" name="job_type" value="0" />
-          </label>
-          <label>
-            Contract
-            <input type="radio" name="job_type" value="1" />
-          </label>
+      <div className="mb-6">
+        <div className="mb-3">
+          <label>Job title</label>
+          <input type="text" name="job_title" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
         </div>
-      </div>
-      <div className="mb-3">
-        <label>Salary</label>
-        <input type="text" name="salary" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Client</label>
-        <input type="text" name="client" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Location</label>
-        <input type="text" name="location" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Agent</label>
-        <select name="agent_id" className="block py-2">
-          <option key="agent-empty">Select</option>
-          {agents.map((agent, index: number) => (
-            <option key={`agent-${index}`} value={agent.id}>{agent.firstName} {agent.lastName}</option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-3">
-        <label>Job Description</label>
-        <input type="text" name="job_description" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Links</label>
-        <textarea name="links" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></textarea>
-      </div>
-      <div className="mb-3">
-        <label>Job spec</label>
-        <input type="file" name="job_spec_file" onChange={onFileInputChange} className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        <div className="mb-3">
+          <label>Job type</label>
+          <div className="radio">
+            <label>
+              None
+              <input type="radio" name="job_type" value="" />
+            </label>
+            <label>
+              Permanent
+              <input type="radio" name="job_type" value="0" />
+            </label>
+            <label>
+              Contract
+              <input type="radio" name="job_type" value="1" />
+            </label>
+          </div>
+        </div>
+        <div className="mb-3">
+          <label>Salary</label>
+          <input type="text" name="salary" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        </div>
+        <div className="mb-3">
+          <label>Client</label>
+          <input type="text" name="client" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        </div>
+        <div className="mb-3">
+          <label>Location</label>
+          <input type="text" name="location" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        </div>
+        <div className="mb-3">
+          <label>Agent</label>
+          <select name="agent_id" className="block py-2">
+            <option key="agent-empty">Select</option>
+            {agents.map((agent, index: number) => (
+              <option key={`agent-${index}`} value={agent.id}>{agent.firstName} {agent.lastName}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-3">
+          <label>Job Description</label>
+          <textarea name="job_description" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></textarea>
+        </div>
+        <div className="mb-3">
+          <label>Links</label>
+          <textarea name="links" className="block w-1/2 rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></textarea>
+        </div>
+        <div className="mb-3">
+          <label>Job spec</label>
+          <input type="file" name="job_spec_file" onChange={onFileInputChange} className="block rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        </div>
       </div>
       <div className="mb-3">
         <input type="submit"></input>

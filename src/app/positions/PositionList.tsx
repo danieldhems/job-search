@@ -1,7 +1,6 @@
 "use client";
 
 export default function positionList({ positions }) {
-  console.log("positions", positions)
   const positionList = positions.map((position, index: number) => {
     const {
       jobTitle,
@@ -9,7 +8,8 @@ export default function positionList({ positions }) {
       jobType,
       salary,
       location,
-      client
+      client,
+      jobSpecFilePath,
     } = position;
 
     return (
@@ -17,6 +17,7 @@ export default function positionList({ positions }) {
         <h3>{jobTitle}</h3>
         <p>{salary}</p>
         <p>{jobDescription}</p>
+        {jobSpecFilePath && <a href={jobSpecFilePath}>View job spec</a>}
       </li>
     )
   });

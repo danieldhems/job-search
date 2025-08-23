@@ -11,7 +11,6 @@ export async function GET(request: Request) {
 
   try {
     const [results] = await connection.query("SELECT * FROM positions");
-    console.log("positions query result", results);
 
     return NextResponse.json(results);
   } catch (error) {

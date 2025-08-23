@@ -12,6 +12,7 @@ export default async function Calls() {
     salary: position.salary,
     location: position.location,
     client: position.client,
+    jobSpecFilePath: position.job_spec_file_path,
   }))
 
   return (
