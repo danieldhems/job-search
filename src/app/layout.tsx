@@ -7,6 +7,7 @@ import PageHeading from "./components/PageHeading";
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
+  { name: 'Sign up', href: '/signup', current: false },
   { name: 'Calls', href: '/calls', current: false },
   { name: 'Agents', href: '/agents', current: false },
   { name: 'Positions', href: '/positions', current: false },

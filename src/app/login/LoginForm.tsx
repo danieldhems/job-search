@@ -2,19 +2,17 @@
 
 import { FormEvent } from "react";
 
-export default function SignupForm() {
+export default function LoginForm() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement;
     const data = {
-      firstName: form.first_name.value,
-      lastName: form.last_name.value,
       emailAddress: form.email_address.value,
       password: form.password.value,
     };
 
-    const request = await fetch('/api/mysql/signup', {
+    const request = await fetch('/api/mysql/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -28,14 +26,6 @@ export default function SignupForm() {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="mb-3">
-        <label>First name</label>
-        <input type="text" name="first_name" id="input-phone-number" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
-      <div className="mb-3">
-        <label>Last name</label>
-        <input type="text" name="last_name" id="input-phone-number" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-      </div>
       <div className="mb-3">
         <label>Email address</label>
         <input type="text" name="email_address" id="input-phone-number" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
