@@ -1,13 +1,22 @@
-import { randomUUID } from "crypto";
+import { randomUUID, type UUID } from "crypto";
 import { getConnection } from "./lib/mysql";
+import { ResultSetHeader } from "mysql2";
 
 export async function createSession(userId: number) {
   try {
     const connection = await getConnection();
 
     const now = new Date();
-    const expiresAt = new Date(now.setDate(now.getMinutes() + 15)).toLocaleDateString();
-    console.log("expires at", expiresAt);
+    const expiryDate = new Date(now.setDate(now.getMinutes() + 15));
+
+    const year = expiryDate.getUTCFullYear();
+    const month = expiryDate.getUTCMonth();
+    const day = expiryDate.getUTCDay();
+    const hours = expiryDate.getUTCHours();
+    const minutes = expiryDate.getUTCMinutes();
+    const seconds = expiryDate.getUTCSeconds();
+
+    const expiresAt = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     const sessionId = randomUUID();
 
@@ -26,8 +35,10 @@ export async function createSession(userId: number) {
       )
     `;
 
-    const [results] = await connection.execute(query);
-    console.log("session query result", results)
+    const [results] = await connection.execute<ResultSetHeader>(query);
+    console.log("createSession result", results);
+
+    return { sessionId };
   } catch (error) {
     console.log('createSession error', error);
   }
