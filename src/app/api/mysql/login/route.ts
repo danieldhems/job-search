@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2/promise";
 import * as bcrypt from "bcrypt";
 import { createSession } from "../session";
 import { getConnection } from "../lib/mysql";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request, res: NextResponse) {
   const connection = await getConnection();
@@ -26,11 +27,20 @@ export async function POST(req: Request, res: NextResponse) {
       const { id, password: hashedPassword } = results[0];
       const passwordMatch = await bcrypt.compare(password, hashedPassword);
       if (passwordMatch) {
-        const session = await createSession(id);
+        const { sessionId } = await createSession(id);
+
+        const cookieStore = await cookies();
+
+        cookieStore.set({
+          name: "job_search_session_id",
+          value: sessionId,
+          secure: true,
+          httpOnly: true,
+        });
       }
     }
 
-    return NextResponse.json({});
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.log("login error", error);
 
