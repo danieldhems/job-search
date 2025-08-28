@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import mysql from "mysql2/promise";
+import mysql, { ResultSetHeader } from "mysql2/promise";
 
 export async function GET(request: Request) {
   const connection = await mysql.createConnection({
@@ -73,9 +73,12 @@ export async function POST(request: Request) {
       );
     `;
 
-    const [results] = await connection.execute(query);
+    const [results] = await connection.execute<ResultSetHeader>(query);
 
-    response = results;
+    response = {
+      success: true,
+      insertId: results.insertId,
+    };
   } catch (error) {
     console.log("positions query error", error)
     response = {

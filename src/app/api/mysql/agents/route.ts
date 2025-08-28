@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import mysql from "mysql2/promise";
+import mysql, { ResultSetHeader } from "mysql2/promise";
 
 
 export async function GET(request: NextRequest) {
@@ -47,10 +47,28 @@ export async function POST(request: Request) {
       email,
     } = await request.json();
 
-    const query = `INSERT INTO agents (first_name, last_name, mobile_number, phone_number, company, email) VALUES ('${firstName}', '${lastName}', '${mobileNumber}', '${phoneNumber}', '${company}', '${email}');`;
-    const [results] = await connection.execute(query);
+    const query = `
+      INSERT INTO agents (
+        first_name, 
+        last_name, 
+        mobile_number, 
+        phone_number, 
+        company,
+        email
+      ) VALUES (
+        '${firstName}', 
+        '${lastName}', 
+        '${mobileNumber}', 
+        '${phoneNumber}', 
+        '${company}', 
+        '${email}'
+      );`;
+    const [results] = await connection.execute<ResultSetHeader>(query);
 
-    response = results;
+    response = {
+      success: true,
+      insertId: results.insertId,
+    };
   } catch (error) {
     console.log("agents query error", error)
     response = {

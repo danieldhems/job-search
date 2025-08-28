@@ -7,11 +7,14 @@ export default function AddCall() {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement;
+
     const data = {
       phoneNumber: form.phone_number.value,
-      agentName: form.agent_name.value,
-      agentCompany: form.agent_company.value,
+      position: form.position.value,
       notes: form.notes.value,
+      agentFirstName: form.agent_first_name.value,
+      agentLastName: form.agent_last_name.value,
+      agentCompany: form.agent_company.value,
     };
 
     const request = await fetch('/api/mysql/calls', {
@@ -30,15 +33,23 @@ export default function AddCall() {
     <form onSubmit={onSubmit}>
       <div className="mb-3">
         <label>Phone number</label>
-        <input type="number" name="phone_number" id="input-phone-number" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        <input type="text" name="phone_number" id="input-phone-number" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
       </div>
       <div className="mb-3">
-        <label>Agent name</label>
-        <input type="text" name="agent_name" id="input-agent-name" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+        <label>Agent first name</label>
+        <input type="text" name="agent_first_name" id="input-agent-name" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+      </div>
+      <div className="mb-3">
+        <label>Agent last name</label>
+        <input type="text" name="agent_last_name" id="input-agent-name" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
       </div>
       <div className="mb-3">
         <label>Agent company</label>
         <input type="text" name="agent_company" id="input-agent-name" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
+      </div>
+      <div className="mb-3">
+        <label>Position</label>
+        <input type="text" name="position" className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
       </div>
       <div className="mb-3">
         <label>Notes</label>
