@@ -6,6 +6,7 @@ export default async function Calls() {
   const positions = await data.json();
 
   const transformedPositions = positions.map((position) => ({
+    id: position.id,
     jobTitle: position.job_title,
     jobDescription: position.job_description,
     jobType: position.job_type,
