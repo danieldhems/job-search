@@ -1,7 +1,7 @@
 import PositionList from "./PositionList";
 import Header from "./Header";
 
-export default async function Calls() {
+export default async function PositionsPage() {
   const data = await fetch("http://localhost:3000/api/mysql/positions");
   const positions = await data.json();
 
